@@ -1,0 +1,112 @@
+
+:where(.dndgrid__box_box) {
+    all: unset;
+}
+.dndgrid__box_box {
+    grid-column: var(--dnd-grid-box-x) / span var(--dnd-grid-box-width);
+    grid-row: var(--dnd-grid-box-y) / span var(--dnd-grid-box-height);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+}
+.dndgrid__box_box > * {
+    grid-column: 1;
+    grid-row: 1;
+}
+[dnd-grid-mode='layout'] .dndgrid__box_box {
+    user-select: none;
+}
+[dnd-grid-mode='layout'] .dndgrid__box_box:not([dnd-grid-mode='layout'] [dnd-grid-mode='grid'] .dndgrid__box_box) > :is(.dndgrid__box_slotContainer, .dndgrid__box_placeholderContainer) {
+    position: absolute;
+    left: var(--dndgrid__box_box_cssPixels-x);
+    top: var(--dndgrid__box_box_cssPixels-y);
+    width: var(--dndgrid__box_box_cssPixels-w);
+    height: var(--dndgrid__box_box_cssPixels-h);
+}
+[dnd-grid-mode='layout'] .dndgrid__box_box:is(.dndgrid__box_dragging, .dndgrid__box_resizing):not([dnd-grid-mode='layout'] [dnd-grid-mode='grid'] .dndgrid__box_box)  > .dndgrid__box_slotContainer {
+    left: calc(var(--dndgrid__box_box_baseCssPixels-x) + var(--dnd-grid-box-offset-left, 0px));
+    top: calc(var(--dndgrid__box_box_baseCssPixels-y) + var(--dnd-grid-box-offset-top, 0px));
+    width: calc(var(--dndgrid__box_box_baseCssPixels-w) + var(--dnd-grid-box-offset-width, 0px));
+    height: calc(var(--dndgrid__box_box_baseCssPixels-h) + var(--dnd-grid-box-offset-height, 0px));
+}
+.dndgrid__box_placeholder {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background: var(--dnd-grid-placeholder-background, #F002);
+    border: var(--dnd-grid-placeholder-border, none);
+}
+[dnd-grid-mode='layout'] .dndgrid__box_box:is(.dndgrid__box_dragging, .dndgrid__box_resizing):not([dnd-grid-mode='layout'] [dnd-grid-mode='grid'] .dndgrid__box_box) > .dndgrid__box_slotContainer {
+    z-index: 9999;
+    opacity: 0.6;
+}
+[dnd-grid-mode='layout'] .dndgrid__box_box:not(.dndgrid__box_dragging, .dndgrid__box_resizing):not([dnd-grid-mode='layout'] [dnd-grid-mode='grid'] .dndgrid__box_box) > .dndgrid__box_slotContainer,
+.dndgrid__box_placeholderContainer {
+    transition-property: left, top, width, height;
+    transition-duration: var(--dnd-grid-transition-duration, 0.1s);
+    transition-timing-function: var(--dnd-grid-transition-timing-function, ease-out);
+}
+.dndgrid__box_slotContainer {
+    z-index: 1;
+    overflow: var(--dndgrid__box_overflow);
+}
+.dndgrid__box_resizeHandleContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    --dnd-grid-resize-handler-default-size: 10px;
+    --dnd-grid-resize-handler-default-offset: calc(var(--dnd-grid-resize-handler-size, var(--dnd-grid-resize-handler-default-size)) / -2);
+}
+.dndgrid__box_resizeHandleContainer > * {
+    position: absolute;
+    width: var(--dnd-grid-resize-handler-size, var(--dnd-grid-resize-handler-default-size));
+    height: var(--dnd-grid-resize-handler-size, var(--dnd-grid-resize-handler-default-size));
+    z-index: 9999;
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize^=t] {
+    top: var(--dnd-grid-resize-handler-offset, var(--dnd-grid-resize-handler-default-offset));
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize^=b] {
+    bottom: var(--dnd-grid-resize-handler-offset, var(--dnd-grid-resize-handler-default-offset));
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize^='-'] {
+    top: 0px;
+    height: 100%;
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize$=l] {
+    left: var(--dnd-grid-resize-handler-offset, var(--dnd-grid-resize-handler-default-offset));
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize$=r] {
+    right: var(--dnd-grid-resize-handler-offset, var(--dnd-grid-resize-handler-default-offset));
+}
+.dndgrid__box_resizeHandleContainer > [dnd-grid-resize$='-'] {
+    left: 0px;
+    width: 100%;
+}
+.dndgrid__box_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+}
+
+:where(.dndgrid__box_container) {
+    all: unset;
+}
+.dndgrid__box_container {
+    display: grid;
+    position: relative;
+    grid-auto-columns: minmax(
+        var(--dnd-grid-cell-width, 8em),
+        var(--dnd-grid-cell-max-width, 0)
+    );
+    grid-auto-rows: minmax(
+        var(--dnd-grid-cell-height, 8em),
+        var(--dnd-grid-cell-max-height, 0)
+    );
+    gap: var(--dnd-grid-cell-spacing, 0.5em);
+    min-width: min-content;
+    min-height: min-content;
+}
