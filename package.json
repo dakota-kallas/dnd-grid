@@ -7,7 +7,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm build"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^5.1.4",
@@ -33,7 +33,8 @@
             "import": "./dist/dnd-grid.js",
             "require": "./dist/dnd-grid.umd.cjs"
         },
-        "./style.css": "./dist/style.css"
+        "./style.css": "./dist/style.css",
+        "./*": "./src/*/lib.js"
     },
     "volta": {
         "node": "18.12.0"
