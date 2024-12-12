@@ -7,8 +7,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-        "prepublishOnly": "pnpm build",
-        "preinstall": "npx only-allow pnpm"
+        "prepublishOnly": "npm build"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^5.1.4",
